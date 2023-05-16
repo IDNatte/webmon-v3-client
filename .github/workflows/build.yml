@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.5.2
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4.6.0
         with:
           python-version: 3.9
 
@@ -34,7 +34,7 @@ jobs:
           cp -R webmon-config/webmon-config/* webmon/
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: release_webmon_3.0.0_client
           path: webmon/
