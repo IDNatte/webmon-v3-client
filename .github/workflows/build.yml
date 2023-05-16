@@ -31,7 +31,7 @@ jobs:
         run: |
           mkdir -p webmon/
           cp -R webmon-client/webmon-client/* webmon/
-          cp -R webmin-config/ webmon/
+          cp -R webmon-config/webmon-config/* webmon/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
