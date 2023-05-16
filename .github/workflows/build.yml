@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: [debian-latest, windows-latest]
+    runs-on: debian-latest
 
     steps:
       - name: Checkout code
