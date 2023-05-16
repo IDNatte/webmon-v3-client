@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: [debian-latest, windows-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependecies
+        run: pip install -r requirements.txt
+
+      - name: Build client
+        run: pyinstaller webmon-client.spec --distpath webmon-client --noconfirm
+
+      - name: Build client config-maker
+        run: pyinstaller webmon-config-maker.spec --distpath webmon-config --noconfirm
+
+      - name: Copy build client & config-maker
+        run: |
+          mkdir -p webmon/
+          cp -R webmon-client/webmon-client/* webmon/
+          cp -R webmin-config/ webmon/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: release_webmon_3.0.0_client
+          path: webmon/

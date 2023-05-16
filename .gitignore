@@ -1,0 +1,15 @@
+build
+dist
+
+__pycache__
+webmon-*/
+webmon
+
+.venv
+.env
+venv
+env
+
+log
+*_log
+log_*
