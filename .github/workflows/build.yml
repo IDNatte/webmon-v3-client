@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4.6.0
         with:
-          python-version: 3.9
+          python-version: 3.10
 
       - name: Install dependecies
         run: pip install -r requirements.txt
@@ -31,7 +31,8 @@ jobs:
         run: |
           mkdir -p webmon/
           # cp -R webmon-client/webmon-client/* webmon/
-          cp -R webmon-config/webmon-config/* webmon/
+          # cp -R webmon-config/webmon-config/* webmon/
+          ls -l
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3.1.2
