@@ -2,7 +2,7 @@ altgraph==0.17.3
 certifi==2023.5.7
 charset-normalizer==3.2.0
 idna==3.4
-msgpack==1.0.5
+msgpack==1.0.7
 psutil==5.9.5
 pyinstaller==5.13.0
 pyinstaller-hooks-contrib==2023.3
