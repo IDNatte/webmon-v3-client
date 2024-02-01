@@ -15,71 +15,65 @@ def config_maker_main():
                 app_logger_path = str(
                     input(
                         'Where do you want to put Application logger ? (E.g. "/var/log/webmon_app") : '
-                    )
+                    ).strip()
+                    or "/var/log/webmon/webmon_client/"
                 )
 
                 file_log_path = str(
                     input(
                         'Where do you want to put config output (E.g. "/var/log/server") : '
-                    )
+                    ).strip()
+                    or "/var/log/webmon/server"
                 )
 
                 file_log_prefix = str(
                     input(
                         "Do you have any file log name prefix (E.g. Current Hostname) ? : "
-                    )
+                    ).strip()
+                    or "host"
                 )
 
                 url_reporter = str(
                     input(
                         'URL reporter endpoint (E.g. "https://reporter.host:5000/upload") : '
-                    )
+                    ).strip()
+                    or "http://localhost:5000/upload"
                 )
 
                 url_reporter_token = str(
                     input(
                         'Token reporter (E.g. "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9") : '
-                    )
+                    ).strip()
+                    or None
                 )
 
-                upload_retention = str(
+                upload_retention = int(
                     input(
                         "Upload retention time, E.g 5 seconds (default 60 seconds) : "
-                    )
+                    ).strip()
+                    or 60
                 )
 
-                if app_logger_path:
-                    app_log_path = app_logger_path
+                # if app_logger_path:
+                #     app_log_path = app_logger_path
 
-                if file_log_prefix:
-                    log_prefix_1 = file_log_prefix
+                # if file_log_prefix:
+                #     log_prefix_1 = file_log_prefix
 
-                if file_log_path:
-                    log_path = file_log_path
+                # if file_log_path:
+                #     log_path = file_log_path
 
-                if url_reporter:
-                    log_reporter = url_reporter
+                # if url_reporter:
+                #     log_reporter = url_reporter
 
-                if url_reporter_token:
-                    reporter_token = url_reporter_token
+                # if url_reporter_token:
+                #     reporter_token = url_reporter_token
 
-                if not app_logger_path:
-                    app_log_path = "/var/log/webmon_client/"
+                # if not app_logger_path:
+                #     app_log_path = "/var/log/webmon/webmon_client/"
 
-                if not file_log_path:
-                    log_path = "/var/log/"
-
-                if not file_log_prefix:
-                    log_prefix_1 = "host"
-
-                if not url_reporter:
-                    log_reporter = "http://localhost:5000/upload"
-
-                if not url_reporter_token:
-                    reporter_token = None
-
-                if not upload_retention:
-                    upload_retention = 60
+                # if not file_log_path:
+                #     log_path = "/var/log/webmon/server"
 
                 print("[*]Creating folder config...")
                 if not os.path.isdir(base_config_folder):
@@ -87,21 +81,22 @@ def config_maker_main():
                 print("[!]Folder config created...\n")
 
                 print("[*]Writting config to file")
+
                 with open(
                     os.path.join(base_config_folder, "config.toml"), "w"
                 ) as c_write:
                     config = {
-                        "app": {"app_log_path": app_log_path},
+                        "app": {"app_log_path": app_logger_path},
                         "log": {
-                            "path": log_path,
+                            "path": file_log_path,
                             "fileformat": "slg",
-                            "filename_prefix_1": log_prefix_1,
+                            "filename_prefix_1": file_log_prefix,
                             "filename_prefix_2": "timestamp",
                         },
                         "reporter": {
-                            "url_link": log_reporter,
-                            "token": reporter_token,
-                            "retention": int(upload_retention),
+                            "url_link": url_reporter,
+                            "token": url_reporter_token,
+                            "retention": upload_retention,
                         },
                     }
 
