@@ -42,6 +42,12 @@ def config_maker_main():
                     )
                 )
 
+                upload_retention = str(
+                    input(
+                        "Upload retention time, E.g 5 seconds (default 60 seconds) : "
+                    )
+                )
+
                 if app_logger_path:
                     app_log_path = app_logger_path
 
@@ -72,6 +78,9 @@ def config_maker_main():
                 if not url_reporter_token:
                     reporter_token = None
 
+                if not upload_retention:
+                    upload_retention = 60
+
                 print("[*]Creating folder config...")
                 if not os.path.isdir(base_config_folder):
                     os.mkdir(base_config_folder)
@@ -89,7 +98,11 @@ def config_maker_main():
                             "filename_prefix_1": log_prefix_1,
                             "filename_prefix_2": "timestamp",
                         },
-                        "reporter": {"url_link": log_reporter, "token": reporter_token},
+                        "reporter": {
+                            "url_link": log_reporter,
+                            "token": reporter_token,
+                            "retention": upload_retention,
+                        },
                     }
 
                     toml.dump(config, c_write)

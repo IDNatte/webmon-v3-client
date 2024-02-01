@@ -51,7 +51,7 @@ def job_run(log_out, config_base_path):
         uploader_thread.stop()
         uploader_thread.join()
 
-        log_out.debug(uploader_thread.get_result())
+        log_out.info(uploader_thread.get_result())
 
 
 def main():
@@ -88,8 +88,13 @@ def main():
             try:
                 if check:
                     try:
-                        time.sleep(60)
-                        job_run(logger, base_path)
+                        with open(config_file, "r") as retention_config:
+                            retention_config_data = toml.load(retention_config)
+
+                            time.sleep(
+                                retention_config_data.get("reporter").get("retention")
+                            )
+                            job_run(logger, base_path)
 
                     except KeyboardInterrupt:
                         logger.info("Closing application")
@@ -106,7 +111,8 @@ def main():
                 logger.error(err)
                 break
 
-    except FileNotFoundError:
+    except FileNotFoundError as e:
+        print(e)
         print("\n[!] Please run config_maker first...!!\n")
 
 

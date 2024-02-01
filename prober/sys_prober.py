@@ -48,7 +48,7 @@ class SystemProberThread(threading.Thread):
                                 net.address
                                 for net in psutil.net_if_addrs().get(net)
                                 if net.family == socket.AF_INET
-                            ][0],
+                            ],
                         }
                         for net in network
                     ],

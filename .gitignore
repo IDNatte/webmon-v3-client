@@ -10,6 +10,7 @@ webmon
 venv
 env
 
+config
 log
 *_log
 log_*
