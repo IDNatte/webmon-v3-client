@@ -54,27 +54,6 @@ def config_maker_main():
                     or 60
                 )
 
-                # if app_logger_path:
-                #     app_log_path = app_logger_path
-
-                # if file_log_prefix:
-                #     log_prefix_1 = file_log_prefix
-
-                # if file_log_path:
-                #     log_path = file_log_path
-
-                # if url_reporter:
-                #     log_reporter = url_reporter
-
-                # if url_reporter_token:
-                #     reporter_token = url_reporter_token
-
-                # if not app_logger_path:
-                #     app_log_path = "/var/log/webmon/webmon_client/"
-
-                # if not file_log_path:
-                #     log_path = "/var/log/webmon/server"
-
                 print("[*]Creating folder config...")
                 if not os.path.isdir(base_config_folder):
                     os.mkdir(base_config_folder)
