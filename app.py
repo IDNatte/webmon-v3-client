@@ -112,7 +112,6 @@ def main():
                 break
 
     except FileNotFoundError as e:
-        print(e)
         print("\n[!] Please run config_maker first...!!\n")
 
 

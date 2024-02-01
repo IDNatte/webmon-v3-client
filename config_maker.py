@@ -101,7 +101,7 @@ def config_maker_main():
                         "reporter": {
                             "url_link": log_reporter,
                             "token": reporter_token,
-                            "retention": upload_retention,
+                            "retention": int(upload_retention),
                         },
                     }
 
