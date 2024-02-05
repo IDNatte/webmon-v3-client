@@ -1,3 +1,6 @@
+from wireguard_tools import WireguardDevice
+from wireguard_tools import WireguardPeer
+
 import subprocess
 import threading
 import platform
@@ -21,6 +24,7 @@ class SystemProberThread(threading.Thread):
 
     def run(self):
         network = psutil.net_io_counters(pernic=True)
+        wireguard = [device.interface for device in WireguardDevice.list()]
         with open(os.path.join(self.output_dir, self.output_file), "wb") as sys_probed:
             # running only if linux
             if platform.system() == "Linux":
@@ -54,9 +58,26 @@ class SystemProberThread(threading.Thread):
                             for net in network
                         ],
                         "hostname": socket.gethostname(),
-                        # ToDo add cpu, memory monitoring
                         "cpu": "",
                         "memory": "",
+                        "wireguard": [
+                            {
+                                "peers": peer_key,
+                                "last_handshake": WireguardPeer.asdict(peer).get(
+                                    "last_handshake"
+                                ),
+                                "rx_bytes": WireguardPeer.asdict(peer).get("rx_bytes"),
+                                "tx_bytes": WireguardPeer.asdict(peer).get("tx_bytes"),
+                                "endpoint": WireguardPeer.asdict(peer).get(
+                                    "endpoint_host"
+                                ),
+                                "port": WireguardPeer.asdict(peer).get("port"),
+                            }
+                            for wg_info in wireguard
+                            for peer_key, peer in WireguardDevice.get(wg_info)
+                            .get_config()
+                            .peers.items()
+                        ],
                     },
                     "application": {
                         "app_net_usage": [
